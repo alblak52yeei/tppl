@@ -1,0 +1,836 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>pascal: Go Coverage Report</title>
+		<style>
+			body {
+				background: black;
+				color: rgb(80, 80, 80);
+			}
+			body, pre, #legend span {
+				font-family: Menlo, monospace;
+				font-weight: bold;
+			}
+			#topbar {
+				background: black;
+				position: fixed;
+				top: 0; left: 0; right: 0;
+				height: 42px;
+				border-bottom: 1px solid rgb(80, 80, 80);
+			}
+			#content {
+				margin-top: 50px;
+			}
+			#nav, #legend {
+				float: left;
+				margin-left: 10px;
+			}
+			#legend {
+				margin-top: 12px;
+			}
+			#nav {
+				margin-top: 10px;
+			}
+			#legend span {
+				margin: 0 5px;
+			}
+			.cov0 { color: rgb(192, 0, 0) }
+.cov1 { color: rgb(128, 128, 128) }
+.cov2 { color: rgb(116, 140, 131) }
+.cov3 { color: rgb(104, 152, 134) }
+.cov4 { color: rgb(92, 164, 137) }
+.cov5 { color: rgb(80, 176, 140) }
+.cov6 { color: rgb(68, 188, 143) }
+.cov7 { color: rgb(56, 200, 146) }
+.cov8 { color: rgb(44, 212, 149) }
+.cov9 { color: rgb(32, 224, 152) }
+.cov10 { color: rgb(20, 236, 155) }
+
+		</style>
+	</head>
+	<body>
+		<div id="topbar">
+			<div id="nav">
+				<select id="files">
+				
+				<option value="file0">pascal/interpreter.go (100.0%)</option>
+				
+				<option value="file1">pascal/lexer.go (97.4%)</option>
+				
+				<option value="file2">pascal/main.go (0.0%)</option>
+				
+				<option value="file3">pascal/parser.go (94.0%)</option>
+				
+				</select>
+			</div>
+			<div id="legend">
+				<span>not tracked</span>
+			
+				<span class="cov0">not covered</span>
+				<span class="cov8">covered</span>
+			
+			</div>
+		</div>
+		<div id="content">
+		
+		<pre class="file" id="file0" style="display: none">package main
+
+import (
+        "fmt"
+)
+
+// Interpreter представляет интерпретатор Pascal
+type Interpreter struct {
+        variables map[string]float64
+}
+
+// NewInterpreter создает новый интерпретатор
+func NewInterpreter() *Interpreter <span class="cov8" title="1">{
+        return &amp;Interpreter{
+                variables: make(map[string]float64),
+        }
+}</span>
+
+// Interpret выполняет программу
+func (i *Interpreter) Interpret(program *Program) error <span class="cov8" title="1">{
+        return i.executeStatements(program.Statements)
+}</span>
+
+// executeStatements выполняет список операторов
+func (i *Interpreter) executeStatements(statements []Statement) error <span class="cov8" title="1">{
+        for _, stmt := range statements </span><span class="cov8" title="1">{
+                err := i.executeStatement(stmt)
+                if err != nil </span><span class="cov8" title="1">{
+                        return err
+                }</span>
+        }
+        <span class="cov8" title="1">return nil</span>
+}
+
+// executeStatement выполняет оператор
+func (i *Interpreter) executeStatement(stmt Statement) error <span class="cov8" title="1">{
+        switch s := stmt.(type) </span>{
+        case *Assignment:<span class="cov8" title="1">
+                value, err := i.evaluateExpression(s.Value)
+                if err != nil </span><span class="cov8" title="1">{
+                        return err
+                }</span>
+                <span class="cov8" title="1">i.variables[s.Variable] = value
+                return nil</span>
+        case *Block:<span class="cov8" title="1">
+                return i.executeStatements(s.Statements)</span>
+        default:<span class="cov8" title="1">
+                return fmt.Errorf("неизвестный тип оператора: %T", stmt)</span>
+        }
+}
+
+// evaluateExpression вычисляет значение выражения
+func (i *Interpreter) evaluateExpression(expr Expression) (float64, error) <span class="cov8" title="1">{
+        switch e := expr.(type) </span>{
+        case *Number:<span class="cov8" title="1">
+                return e.Value, nil</span>
+        case *Identifier:<span class="cov8" title="1">
+                value, ok := i.variables[e.Name]
+                if !ok </span><span class="cov8" title="1">{
+                        // Переменная не инициализирована, считаем её равной 0
+                        return 0, nil
+                }</span>
+                <span class="cov8" title="1">return value, nil</span>
+        case *BinaryOp:<span class="cov8" title="1">
+                left, err := i.evaluateExpression(e.Left)
+                if err != nil </span><span class="cov8" title="1">{
+                        return 0, err
+                }</span>
+                
+                <span class="cov8" title="1">right, err := i.evaluateExpression(e.Right)
+                if err != nil </span><span class="cov8" title="1">{
+                        return 0, err
+                }</span>
+                
+                <span class="cov8" title="1">switch e.Operator </span>{
+                case TokenPLUS:<span class="cov8" title="1">
+                        return left + right, nil</span>
+                case TokenMINUS:<span class="cov8" title="1">
+                        return left - right, nil</span>
+                case TokenMULTIPLY:<span class="cov8" title="1">
+                        return left * right, nil</span>
+                case TokenDIVIDE:<span class="cov8" title="1">
+                        if right == 0 </span><span class="cov8" title="1">{
+                                return 0, fmt.Errorf("деление на ноль")
+                        }</span>
+                        <span class="cov8" title="1">return left / right, nil</span>
+                default:<span class="cov8" title="1">
+                        return 0, fmt.Errorf("неизвестный оператор: %v", e.Operator)</span>
+                }
+        default:<span class="cov8" title="1">
+                return 0, fmt.Errorf("неизвестный тип выражения: %T", expr)</span>
+        }
+}
+
+// GetVariables возвращает словарь всех переменных
+func (i *Interpreter) GetVariables() map[string]float64 <span class="cov8" title="1">{
+        // Создаем копию, чтобы избежать изменений извне
+        result := make(map[string]float64)
+        for k, v := range i.variables </span><span class="cov8" title="1">{
+                result[k] = v
+        }</span>
+        <span class="cov8" title="1">return result</span>
+}
+
+</pre>
+		
+		<pre class="file" id="file1" style="display: none">package main
+
+import (
+        "fmt"
+        "unicode"
+        "unicode/utf8"
+)
+
+// TokenType представляет тип токена
+type TokenType int
+
+const (
+        TokenEOF TokenType = iota
+        TokenBEGIN
+        TokenEND
+        TokenDOT
+        TokenSEMICOLON
+        TokenASSIGN
+        TokenPLUS
+        TokenMINUS
+        TokenMULTIPLY
+        TokenDIVIDE
+        TokenLPAREN
+        TokenRPAREN
+        TokenIDENTIFIER
+        TokenNUMBER
+)
+
+// Token представляет токен с типом и значением
+type Token struct {
+        Type  TokenType
+        Value string
+        Pos   int
+}
+
+// Lexer представляет лексер для Pascal
+type Lexer struct {
+        input  string
+        pos    int
+        start  int
+        tokens []Token
+}
+
+// NewLexer создает новый лексер
+func NewLexer(input string) *Lexer <span class="cov8" title="1">{
+        return &amp;Lexer{
+                input:  input,
+                pos:    0,
+                start:  0,
+                tokens: []Token{},
+        }
+}</span>
+
+// Tokenize разбивает входную строку на токены
+func (l *Lexer) Tokenize() ([]Token, error) <span class="cov8" title="1">{
+        for l.pos &lt; len(l.input) </span><span class="cov8" title="1">{
+                l.skipWhitespace()
+                if l.pos &gt;= len(l.input) </span><span class="cov8" title="1">{
+                        break</span>
+                }
+
+                <span class="cov8" title="1">r, size := l.peekRune()
+                if size == 0 </span><span class="cov0" title="0">{
+                        break</span>
+                }
+
+                <span class="cov8" title="1">switch </span>{
+                case r == '.':<span class="cov8" title="1">
+                        l.emit(TokenDOT)
+                        l.advance()</span>
+                case r == ';':<span class="cov8" title="1">
+                        l.emit(TokenSEMICOLON)
+                        l.advance()</span>
+                case r == ':':<span class="cov8" title="1">
+                        l.advance() // пропускаем ':'
+                        // Пропускаем пробелы между ':' и '='
+                        for l.pos &lt; len(l.input) </span><span class="cov8" title="1">{
+                                nextR, _ := l.peekRune()
+                                if !unicode.IsSpace(nextR) </span><span class="cov8" title="1">{
+                                        break</span>
+                                }
+                                <span class="cov8" title="1">l.advance()</span>
+                        }
+                        <span class="cov8" title="1">if l.pos &lt; len(l.input) &amp;&amp; l.input[l.pos] == '=' </span><span class="cov8" title="1">{
+                                l.advance() // пропускаем '='
+                                l.emit(TokenASSIGN)
+                        }</span> else<span class="cov8" title="1"> {
+                                return nil, fmt.Errorf("ожидался '=' после ':' на позиции %d", l.pos)
+                        }</span>
+                case r == '+':<span class="cov8" title="1">
+                        l.emit(TokenPLUS)
+                        l.advance()</span>
+                case r == '-':<span class="cov8" title="1">
+                        l.emit(TokenMINUS)
+                        l.advance()</span>
+                case r == '*':<span class="cov8" title="1">
+                        l.emit(TokenMULTIPLY)
+                        l.advance()</span>
+                case r == '/':<span class="cov8" title="1">
+                        l.emit(TokenDIVIDE)
+                        l.advance()</span>
+                case r == '(':<span class="cov8" title="1">
+                        l.emit(TokenLPAREN)
+                        l.advance()</span>
+                case r == ')':<span class="cov8" title="1">
+                        l.emit(TokenRPAREN)
+                        l.advance()</span>
+                case unicode.IsDigit(r):<span class="cov8" title="1">
+                        l.readNumber()</span>
+                case unicode.IsLetter(r):<span class="cov8" title="1">
+                        l.readIdentifier()</span>
+                default:<span class="cov8" title="1">
+                        return nil, fmt.Errorf("неожиданный символ '%c' на позиции %d", r, l.pos)</span>
+                }
+        }
+
+        <span class="cov8" title="1">l.emit(TokenEOF)
+        return l.tokens, nil</span>
+}
+
+func (l *Lexer) skipWhitespace() <span class="cov8" title="1">{
+        for l.pos &lt; len(l.input) </span><span class="cov8" title="1">{
+                r, size := l.peekRune()
+                if size == 0 </span><span class="cov0" title="0">{
+                        break</span>
+                }
+                <span class="cov8" title="1">if !unicode.IsSpace(r) </span><span class="cov8" title="1">{
+                        break</span>
+                }
+                <span class="cov8" title="1">l.advance()</span>
+        }
+        <span class="cov8" title="1">l.start = l.pos</span>
+}
+
+func (l *Lexer) readNumber() <span class="cov8" title="1">{
+        for l.pos &lt; len(l.input) </span><span class="cov8" title="1">{
+                r, size := l.peekRune()
+                if size == 0 || !unicode.IsDigit(r) </span><span class="cov8" title="1">{
+                        break</span>
+                }
+                <span class="cov8" title="1">l.advance()</span>
+        }
+        <span class="cov8" title="1">l.emit(TokenNUMBER)</span>
+}
+
+func (l *Lexer) readIdentifier() <span class="cov8" title="1">{
+        for l.pos &lt; len(l.input) </span><span class="cov8" title="1">{
+                r, size := l.peekRune()
+                if size == 0 || (!unicode.IsLetter(r) &amp;&amp; !unicode.IsDigit(r)) </span><span class="cov8" title="1">{
+                        break</span>
+                }
+                <span class="cov8" title="1">l.advance()</span>
+        }
+        <span class="cov8" title="1">value := l.input[l.start:l.pos]
+        
+        // Проверяем ключевые слова
+        switch value </span>{
+        case "BEGIN":<span class="cov8" title="1">
+                l.emit(TokenBEGIN)</span>
+        case "END":<span class="cov8" title="1">
+                l.emit(TokenEND)</span>
+        default:<span class="cov8" title="1">
+                l.emit(TokenIDENTIFIER)</span>
+        }
+}
+
+func (l *Lexer) peekRune() (rune, int) <span class="cov8" title="1">{
+        if l.pos &gt;= len(l.input) </span><span class="cov8" title="1">{
+                return 0, 0
+        }</span>
+        <span class="cov8" title="1">return utf8.DecodeRuneInString(l.input[l.pos:])</span>
+}
+
+func (l *Lexer) peekNext() rune <span class="cov8" title="1">{
+        if l.pos+1 &gt;= len(l.input) </span><span class="cov8" title="1">{
+                return 0
+        }</span>
+        <span class="cov8" title="1">r, _ := utf8.DecodeRuneInString(l.input[l.pos+1:])
+        return r</span>
+}
+
+func (l *Lexer) advance() <span class="cov8" title="1">{
+        if l.pos &lt; len(l.input) </span><span class="cov8" title="1">{
+                _, size := utf8.DecodeRuneInString(l.input[l.pos:])
+                l.pos += size
+        }</span>
+}
+
+func (l *Lexer) emit(t TokenType) <span class="cov8" title="1">{
+        value := l.input[l.start:l.pos]
+        l.tokens = append(l.tokens, Token{
+                Type:  t,
+                Value: value,
+                Pos:   l.start,
+        })
+        l.start = l.pos
+}</span>
+
+</pre>
+		
+		<pre class="file" id="file2" style="display: none">package main
+
+import (
+        "fmt"
+        "os"
+)
+
+func main() <span class="cov0" title="0">{
+        if len(os.Args) &lt; 2 </span><span class="cov0" title="0">{
+                fmt.Println("Использование: pascal &lt;файл.pas&gt;")
+                os.Exit(1)
+        }</span>
+
+        <span class="cov0" title="0">filename := os.Args[1]
+        code, err := os.ReadFile(filename)
+        if err != nil </span><span class="cov0" title="0">{
+                fmt.Fprintf(os.Stderr, "Ошибка чтения файла: %v\n", err)
+                os.Exit(1)
+        }</span>
+
+        // Лексический анализ
+        <span class="cov0" title="0">lexer := NewLexer(string(code))
+        tokens, err := lexer.Tokenize()
+        if err != nil </span><span class="cov0" title="0">{
+                fmt.Fprintf(os.Stderr, "Ошибка лексического анализа: %v\n", err)
+                os.Exit(1)
+        }</span>
+
+        // Синтаксический анализ
+        <span class="cov0" title="0">parser := NewParser(tokens)
+        program, err := parser.Parse()
+        if err != nil </span><span class="cov0" title="0">{
+                fmt.Fprintf(os.Stderr, "Ошибка синтаксического анализа: %v\n", err)
+                os.Exit(1)
+        }</span>
+
+        // Интерпретация
+        <span class="cov0" title="0">interpreter := NewInterpreter()
+        err = interpreter.Interpret(program)
+        if err != nil </span><span class="cov0" title="0">{
+                fmt.Fprintf(os.Stderr, "Ошибка выполнения: %v\n", err)
+                os.Exit(1)
+        }</span>
+
+        // Вывод значений всех переменных
+        <span class="cov0" title="0">variables := interpreter.GetVariables()
+        if len(variables) == 0 </span><span class="cov0" title="0">{
+                fmt.Println("{}")
+        }</span> else<span class="cov0" title="0"> {
+                fmt.Print("{")
+                first := true
+                for name, value := range variables </span><span class="cov0" title="0">{
+                        if !first </span><span class="cov0" title="0">{
+                                fmt.Print(", ")
+                        }</span>
+                        // Выводим целое число, если оно целое
+                        <span class="cov0" title="0">if value == float64(int64(value)) </span><span class="cov0" title="0">{
+                                fmt.Printf("%s: %d", name, int64(value))
+                        }</span> else<span class="cov0" title="0"> {
+                                fmt.Printf("%s: %g", name, value)
+                        }</span>
+                        <span class="cov0" title="0">first = false</span>
+                }
+                <span class="cov0" title="0">fmt.Println("}")</span>
+        }
+}
+
+</pre>
+		
+		<pre class="file" id="file3" style="display: none">package main
+
+import (
+        "fmt"
+)
+
+// Node представляет узел AST
+type Node interface {
+        String() string
+}
+
+// Program представляет программу
+type Program struct {
+        Statements []Statement
+}
+
+func (p *Program) String() string <span class="cov8" title="1">{
+        return fmt.Sprintf("Program(%d statements)", len(p.Statements))
+}</span>
+
+// Statement представляет оператор
+type Statement interface {
+        Node
+        statementNode()
+}
+
+// Assignment представляет присваивание
+type Assignment struct {
+        Variable string
+        Value    Expression
+}
+
+func (a *Assignment) statementNode() {<span class="cov8" title="1">}</span>
+func (a *Assignment) String() string <span class="cov8" title="1">{
+        return fmt.Sprintf("Assignment(%s := %s)", a.Variable, a.Value)
+}</span>
+
+// Block представляет блок BEGIN ... END
+type Block struct {
+        Statements []Statement
+}
+
+func (b *Block) statementNode() {<span class="cov8" title="1">}</span>
+func (b *Block) String() string <span class="cov8" title="1">{
+        return fmt.Sprintf("Block(%d statements)", len(b.Statements))
+}</span>
+
+// Expression представляет выражение
+type Expression interface {
+        Node
+        expressionNode()
+}
+
+// Number представляет число
+type Number struct {
+        Value float64
+}
+
+func (n *Number) expressionNode() {<span class="cov8" title="1">}</span>
+func (n *Number) String() string <span class="cov8" title="1">{
+        return fmt.Sprintf("Number(%g)", n.Value)
+}</span>
+
+// Identifier представляет переменную
+type Identifier struct {
+        Name string
+}
+
+func (i *Identifier) expressionNode() {<span class="cov8" title="1">}</span>
+func (i *Identifier) String() string <span class="cov8" title="1">{
+        return fmt.Sprintf("Identifier(%s)", i.Name)
+}</span>
+
+// BinaryOp представляет бинарную операцию
+type BinaryOp struct {
+        Left     Expression
+        Operator TokenType
+        Right    Expression
+}
+
+func (b *BinaryOp) expressionNode() {<span class="cov8" title="1">}</span>
+func (b *BinaryOp) String() string <span class="cov8" title="1">{
+        op := ""
+        switch b.Operator </span>{
+        case TokenPLUS:<span class="cov8" title="1">
+                op = "+"</span>
+        case TokenMINUS:<span class="cov8" title="1">
+                op = "-"</span>
+        case TokenMULTIPLY:<span class="cov8" title="1">
+                op = "*"</span>
+        case TokenDIVIDE:<span class="cov8" title="1">
+                op = "/"</span>
+        }
+        <span class="cov8" title="1">return fmt.Sprintf("BinaryOp(%s %s %s)", b.Left, op, b.Right)</span>
+}
+
+// Parser представляет парсер
+type Parser struct {
+        tokens []Token
+        pos    int
+}
+
+// NewParser создает новый парсер
+func NewParser(tokens []Token) *Parser <span class="cov8" title="1">{
+        return &amp;Parser{
+                tokens: tokens,
+                pos:    0,
+        }
+}</span>
+
+// Parse разбирает токены в AST
+func (p *Parser) Parse() (*Program, error) <span class="cov8" title="1">{
+        program := &amp;Program{}
+        
+        // Ожидаем BEGIN
+        if !p.match(TokenBEGIN) </span><span class="cov8" title="1">{
+                return nil, fmt.Errorf("ожидался BEGIN на позиции %d", p.current().Pos)
+        }</span>
+        
+        // Парсим блок
+        <span class="cov8" title="1">block, err := p.parseBlock()
+        if err != nil </span><span class="cov8" title="1">{
+                return nil, err
+        }</span>
+        
+        <span class="cov8" title="1">program.Statements = block.Statements
+        
+        // Ожидаем END
+        if !p.match(TokenEND) </span><span class="cov0" title="0">{
+                return nil, fmt.Errorf("ожидался END на позиции %d", p.current().Pos)
+        }</span>
+        
+        // Ожидаем точку
+        <span class="cov8" title="1">if !p.match(TokenDOT) </span><span class="cov8" title="1">{
+                return nil, fmt.Errorf("ожидалась точка на позиции %d", p.current().Pos)
+        }</span>
+        
+        // Проверяем EOF
+        <span class="cov8" title="1">if !p.match(TokenEOF) </span><span class="cov8" title="1">{
+                return nil, fmt.Errorf("неожиданные токены после точки")
+        }</span>
+        
+        <span class="cov8" title="1">return program, nil</span>
+}
+
+// parseBlock парсит блок BEGIN ... END
+func (p *Parser) parseBlock() (*Block, error) <span class="cov8" title="1">{
+        block := &amp;Block{Statements: []Statement{}}
+        
+        for </span><span class="cov8" title="1">{
+                // Проверяем, не конец ли блока
+                if p.check(TokenEND) </span><span class="cov8" title="1">{
+                        break</span>
+                }
+                
+                // Парсим оператор
+                <span class="cov8" title="1">stmt, err := p.parseStatement()
+                if err != nil </span><span class="cov8" title="1">{
+                        return nil, err
+                }</span>
+                
+                <span class="cov8" title="1">block.Statements = append(block.Statements, stmt)
+                
+                // Проверяем, не конец ли блока после точки с запятой
+                if p.check(TokenEND) </span><span class="cov8" title="1">{
+                        break</span>
+                }
+        }
+        
+        <span class="cov8" title="1">return block, nil</span>
+}
+
+// parseStatement парсит оператор
+func (p *Parser) parseStatement() (Statement, error) <span class="cov8" title="1">{
+        // Проверяем, не вложенный ли блок
+        if p.match(TokenBEGIN) </span><span class="cov8" title="1">{
+                block, err := p.parseBlock()
+                if err != nil </span><span class="cov0" title="0">{
+                        return nil, err
+                }</span>
+                
+                <span class="cov8" title="1">if !p.match(TokenEND) </span><span class="cov0" title="0">{
+                        return nil, fmt.Errorf("ожидался END на позиции %d", p.current().Pos)
+                }</span>
+                
+                // Точка с запятой после END (если не последний оператор)
+                <span class="cov8" title="1">if p.check(TokenSEMICOLON) </span><span class="cov8" title="1">{
+                        p.advance()
+                }</span>
+                
+                <span class="cov8" title="1">return block, nil</span>
+        }
+        
+        // Парсим присваивание
+        <span class="cov8" title="1">if p.check(TokenIDENTIFIER) </span><span class="cov8" title="1">{
+                varName := p.current().Value
+                p.advance()
+                
+                if !p.match(TokenASSIGN) </span><span class="cov8" title="1">{
+                        return nil, fmt.Errorf("ожидался := на позиции %d", p.current().Pos)
+                }</span>
+                
+                <span class="cov8" title="1">expr, err := p.parseExpression()
+                if err != nil </span><span class="cov8" title="1">{
+                        return nil, err
+                }</span>
+                
+                // Точка с запятой после присваивания
+                <span class="cov8" title="1">if p.check(TokenSEMICOLON) </span><span class="cov8" title="1">{
+                        p.advance()
+                }</span>
+                
+                <span class="cov8" title="1">return &amp;Assignment{
+                        Variable: varName,
+                        Value:    expr,
+                }, nil</span>
+        }
+        
+        <span class="cov8" title="1">return nil, fmt.Errorf("неожиданный токен на позиции %d: %v", p.current().Pos, p.current())</span>
+}
+
+// parseExpression парсит выражение (с учетом приоритета операций)
+func (p *Parser) parseExpression() (Expression, error) <span class="cov8" title="1">{
+        return p.parseAdditive()
+}</span>
+
+// parseAdditive парсит аддитивные операции (+ и -)
+func (p *Parser) parseAdditive() (Expression, error) <span class="cov8" title="1">{
+        left, err := p.parseMultiplicative()
+        if err != nil </span><span class="cov8" title="1">{
+                return nil, err
+        }</span>
+        
+        <span class="cov8" title="1">for p.check(TokenPLUS) || p.check(TokenMINUS) </span><span class="cov8" title="1">{
+                op := p.current().Type
+                p.advance()
+                
+                right, err := p.parseMultiplicative()
+                if err != nil </span><span class="cov0" title="0">{
+                        return nil, err
+                }</span>
+                
+                <span class="cov8" title="1">left = &amp;BinaryOp{
+                        Left:     left,
+                        Operator: op,
+                        Right:    right,
+                }</span>
+        }
+        
+        <span class="cov8" title="1">return left, nil</span>
+}
+
+// parseMultiplicative парсит мультипликативные операции (* и /)
+func (p *Parser) parseMultiplicative() (Expression, error) <span class="cov8" title="1">{
+        left, err := p.parseUnary()
+        if err != nil </span><span class="cov8" title="1">{
+                return nil, err
+        }</span>
+        
+        <span class="cov8" title="1">for p.check(TokenMULTIPLY) || p.check(TokenDIVIDE) </span><span class="cov8" title="1">{
+                op := p.current().Type
+                p.advance()
+                
+                right, err := p.parseUnary()
+                if err != nil </span><span class="cov0" title="0">{
+                        return nil, err
+                }</span>
+                
+                <span class="cov8" title="1">left = &amp;BinaryOp{
+                        Left:     left,
+                        Operator: op,
+                        Right:    right,
+                }</span>
+        }
+        
+        <span class="cov8" title="1">return left, nil</span>
+}
+
+// parseUnary парсит унарные выражения и первичные выражения
+func (p *Parser) parseUnary() (Expression, error) <span class="cov8" title="1">{
+        if p.check(TokenMINUS) </span><span class="cov8" title="1">{
+                p.advance()
+                expr, err := p.parseUnary()
+                if err != nil </span><span class="cov0" title="0">{
+                        return nil, err
+                }</span>
+                <span class="cov8" title="1">return &amp;BinaryOp{
+                        Left:     &amp;Number{Value: 0},
+                        Operator: TokenMINUS,
+                        Right:    expr,
+                }, nil</span>
+        }
+        
+        <span class="cov8" title="1">return p.parsePrimary()</span>
+}
+
+// parsePrimary парсит первичные выражения (числа, переменные, скобки)
+func (p *Parser) parsePrimary() (Expression, error) <span class="cov8" title="1">{
+        if p.check(TokenNUMBER) </span><span class="cov8" title="1">{
+                value := 0.0
+                fmt.Sscanf(p.current().Value, "%f", &amp;value)
+                p.advance()
+                return &amp;Number{Value: value}, nil
+        }</span>
+        
+        <span class="cov8" title="1">if p.check(TokenIDENTIFIER) </span><span class="cov8" title="1">{
+                name := p.current().Value
+                p.advance()
+                return &amp;Identifier{Name: name}, nil
+        }</span>
+        
+        <span class="cov8" title="1">if p.match(TokenLPAREN) </span><span class="cov8" title="1">{
+                expr, err := p.parseExpression()
+                if err != nil </span><span class="cov0" title="0">{
+                        return nil, err
+                }</span>
+                
+                <span class="cov8" title="1">if !p.match(TokenRPAREN) </span><span class="cov8" title="1">{
+                        return nil, fmt.Errorf("ожидалась закрывающая скобка на позиции %d", p.current().Pos)
+                }</span>
+                
+                <span class="cov8" title="1">return expr, nil</span>
+        }
+        
+        <span class="cov8" title="1">return nil, fmt.Errorf("неожиданный токен на позиции %d: %v", p.current().Pos, p.current())</span>
+}
+
+func (p *Parser) current() Token <span class="cov8" title="1">{
+        if p.pos &gt;= len(p.tokens) </span><span class="cov8" title="1">{
+                return Token{Type: TokenEOF}
+        }</span>
+        <span class="cov8" title="1">return p.tokens[p.pos]</span>
+}
+
+func (p *Parser) advance() <span class="cov8" title="1">{
+        if p.pos &lt; len(p.tokens) </span><span class="cov8" title="1">{
+                p.pos++
+        }</span>
+}
+
+func (p *Parser) check(t TokenType) bool <span class="cov8" title="1">{
+        return p.current().Type == t
+}</span>
+
+func (p *Parser) match(t TokenType) bool <span class="cov8" title="1">{
+        if p.check(t) </span><span class="cov8" title="1">{
+                p.advance()
+                return true
+        }</span>
+        <span class="cov8" title="1">return false</span>
+}
+
+</pre>
+		
+		</div>
+	</body>
+	<script>
+	(function() {
+		var files = document.getElementById('files');
+		var visible;
+		files.addEventListener('change', onChange, false);
+		function select(part) {
+			if (visible)
+				visible.style.display = 'none';
+			visible = document.getElementById(part);
+			if (!visible)
+				return;
+			files.value = part;
+			visible.style.display = 'block';
+			location.hash = part;
+		}
+		function onChange() {
+			select(files.value);
+			window.scrollTo(0, 0);
+		}
+		if (location.hash != "") {
+			select(location.hash.substr(1));
+		}
+		if (!visible) {
+			select("file0");
+		}
+	})();
+	</script>
+</html>
