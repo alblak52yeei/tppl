@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/binary"
+	"io"
 	"math"
 	"net"
 	"strconv"
@@ -179,9 +180,9 @@ func TestClient_ReceiveData(t *testing.T) {
 		t.Fatalf("Failed to send get: %v", err)
 	}
 	
-	// Read data
+	// Read data directly from connection
 	buffer := make([]byte, Server1RecordSize)
-	n, err := client.reader.Read(buffer)
+	n, err := io.ReadFull(client.conn, buffer)
 	if err != nil {
 		t.Fatalf("Failed to read: %v", err)
 	}

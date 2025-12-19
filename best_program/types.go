@@ -20,3 +20,4 @@ type ServerConfig struct {
 	Name    string
 }
 
+

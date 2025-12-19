@@ -34,9 +34,28 @@ func ParseServer1Data(data []byte) (*DataRecord, error) {
 		return nil, fmt.Errorf("checksum mismatch: expected %d, got %d", checksum, data[Server1RecordSize-1])
 	}
 	
-	// Parse timestamp (8 bytes, little-endian)
-	timestampMicro := int64(binary.LittleEndian.Uint64(data[0:8]))
-	timestamp := time.Unix(timestampMicro/TimestampMultiplier, (timestampMicro%TimestampMultiplier)*1000)
+	// Parse timestamp (8 bytes, little-endian, signed int64)
+	// Read as uint64 first, then convert to int64 to handle sign correctly
+	timestampRaw := binary.LittleEndian.Uint64(data[0:8])
+	timestampMicro := int64(timestampRaw)
+	// Convert microseconds to seconds and nanoseconds
+	// Handle negative values correctly
+	var seconds int64
+	var nanoseconds int64
+	if timestampMicro >= 0 {
+		seconds = timestampMicro / TimestampMultiplier
+		nanoseconds = (timestampMicro % TimestampMultiplier) * 1000
+	} else {
+		// For negative timestamps (shouldn't happen for POSIX, but handle it)
+		seconds = timestampMicro / TimestampMultiplier
+		remainder := timestampMicro % TimestampMultiplier
+		if remainder < 0 {
+			remainder += TimestampMultiplier
+			seconds--
+		}
+		nanoseconds = remainder * 1000
+	}
+	timestamp := time.Unix(seconds, nanoseconds)
 	
 	// Parse temperature (4 bytes, little-endian, float32)
 	tempFloat := math.Float32frombits(binary.LittleEndian.Uint32(data[8:12]))
@@ -67,14 +86,37 @@ func ParseServer2Data(data []byte) (*DataRecord, error) {
 		return nil, fmt.Errorf("checksum mismatch: expected %d, got %d", checksum, data[Server2RecordSize-1])
 	}
 	
-	// Parse timestamp (8 bytes, little-endian)
-	timestampMicro := int64(binary.LittleEndian.Uint64(data[0:8]))
-	timestamp := time.Unix(timestampMicro/TimestampMultiplier, (timestampMicro%TimestampMultiplier)*1000)
+	// Parse timestamp (8 bytes, little-endian, signed int64)
+	// Read as uint64 first, then convert to int64 to handle sign correctly
+	timestampRaw := binary.LittleEndian.Uint64(data[0:8])
+	timestampMicro := int64(timestampRaw)
+	// Convert microseconds to seconds and nanoseconds
+	// Handle negative values correctly
+	var seconds int64
+	var nanoseconds int64
+	if timestampMicro >= 0 {
+		seconds = timestampMicro / TimestampMultiplier
+		nanoseconds = (timestampMicro % TimestampMultiplier) * 1000
+	} else {
+		// For negative timestamps (shouldn't happen for POSIX, but handle it)
+		seconds = timestampMicro / TimestampMultiplier
+		remainder := timestampMicro % TimestampMultiplier
+		if remainder < 0 {
+			remainder += TimestampMultiplier
+			seconds--
+		}
+		nanoseconds = remainder * 1000
+	}
+	timestamp := time.Unix(seconds, nanoseconds)
 	
 	// Parse X, Y, Z (each 4 bytes, little-endian, signed integers)
-	x := int32(binary.LittleEndian.Uint32(data[8:12]))
-	y := int32(binary.LittleEndian.Uint32(data[12:16]))
-	z := int32(binary.LittleEndian.Uint32(data[16:20]))
+	// Read as uint32 first, then convert to int32 to handle sign correctly
+	xRaw := binary.LittleEndian.Uint32(data[8:12])
+	yRaw := binary.LittleEndian.Uint32(data[12:16])
+	zRaw := binary.LittleEndian.Uint32(data[16:20])
+	x := int32(xRaw)
+	y := int32(yRaw)
+	z := int32(zRaw)
 	
 	return &DataRecord{
 		Timestamp: timestamp,

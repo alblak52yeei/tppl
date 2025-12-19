@@ -1,7 +1,6 @@
 package main
 
 import (
-	"bufio"
 	"fmt"
 	"io"
 	"log"
@@ -20,7 +19,6 @@ const (
 type Client struct {
 	config     ServerConfig
 	conn       net.Conn
-	reader     *bufio.Reader
 	recordSize int
 	parseFunc  func([]byte) (*DataRecord, error)
 	stopChan   chan struct{}
@@ -50,7 +48,6 @@ func (c *Client) Connect() error {
 	}
 	
 	c.conn = conn
-	c.reader = bufio.NewReader(conn)
 	
 	// Send secret key for authentication
 	if _, err := conn.Write([]byte(SecretKey)); err != nil {
@@ -137,27 +134,28 @@ func (c *Client) receiveLoop() {
 		default:
 		}
 		
-		// Set read timeout
-		c.conn.SetReadDeadline(time.Now().Add(ReadTimeout))
-		
-		// Send "get" command
+		// Send "get" command first
 		if _, err := c.conn.Write([]byte(GetCommand)); err != nil {
 			c.errorChan <- fmt.Errorf("[%s] failed to send get command: %w", c.config.Name, err)
 			return
 		}
 		
-		// Read full record
-		n, err := io.ReadFull(c.reader, buffer)
+		// Set read timeout AFTER sending command
+		c.conn.SetReadDeadline(time.Now().Add(ReadTimeout))
+		
+		// Read full record directly from connection (no buffering)
+		n, err := io.ReadFull(c.conn, buffer)
 		if err != nil {
 			if err == io.EOF {
 				c.errorChan <- fmt.Errorf("[%s] connection closed by server", c.config.Name)
+				return
 			} else if netErr, ok := err.(net.Error); ok && netErr.Timeout() {
-				// Timeout is expected, continue to send next "get"
+				// Timeout is expected if server doesn't respond, continue to send next "get"
 				continue
 			} else {
 				c.errorChan <- fmt.Errorf("[%s] read error: %w", c.config.Name, err)
+				return
 			}
-			return
 		}
 		
 		if n != c.recordSize {
@@ -183,4 +181,5 @@ func (c *Client) receiveLoop() {
 		}
 	}
 }
+
 

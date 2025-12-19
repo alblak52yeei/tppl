@@ -102,3 +102,4 @@ func (i *Interpreter) GetVariables() map[string]float64 {
 	return result
 }
 
+
