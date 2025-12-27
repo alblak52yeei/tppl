@@ -5,6 +5,7 @@ import (
 	"io"
 	"log"
 	"net"
+	"strings"
 	"time"
 )
 
@@ -55,6 +56,25 @@ func (c *Client) Connect() error {
 		return fmt.Errorf("failed to send secret key: %w", err)
 	}
 	
+	// Read server response "granted" (as in Lua example)
+	buf := make([]byte, 256)
+	conn.SetReadDeadline(time.Now().Add(5 * time.Second))
+	n, err := conn.Read(buf)
+	if err != nil {
+		conn.Close()
+		return fmt.Errorf("failed to read auth response: %w", err)
+	}
+	
+	// Check if we got "granted" response
+	response := string(buf[:n])
+	if !strings.Contains(response, "granted") {
+		conn.Close()
+		return fmt.Errorf("unexpected auth response: %s", response)
+	}
+	
+	// Clear read deadline
+	conn.SetReadDeadline(time.Time{})
+	
 	log.Printf("[%s] Connected and authenticated", c.config.Name)
 	return nil
 }
@@ -81,6 +101,7 @@ func (c *Client) GetDataChan() <-chan *DataRecord {
 func (c *Client) GetErrorChan() <-chan error {
 	return c.errorChan
 }
+
 
 // run is the main loop that handles connection, data requests, and reconnection
 func (c *Client) run() {
@@ -114,12 +135,8 @@ func (c *Client) run() {
 			c.conn = nil
 		}
 		
-		// Wait before reconnecting
-		select {
-		case <-c.stopChan:
-			return
-		case <-time.After(ReconnectDelay):
-		}
+		// Reconnect immediately after connection break (no delay)
+		// Delay is only for failed connection attempts
 	}
 }
 
@@ -159,15 +176,17 @@ func (c *Client) receiveLoop() {
 		}
 		
 		if n != c.recordSize {
+			// Incomplete record - reconnect
 			c.errorChan <- fmt.Errorf("[%s] incomplete record: got %d bytes, expected %d", c.config.Name, n, c.recordSize)
-			continue
+			return
 		}
 		
 		// Parse the record
 		record, err := c.parseFunc(buffer)
 		if err != nil {
+			// Parse error (including checksum mismatch) - reconnect
 			c.errorChan <- fmt.Errorf("[%s] parse error: %w", c.config.Name, err)
-			continue
+			return
 		}
 		
 		// Send parsed record to channel (non-blocking)

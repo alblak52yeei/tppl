@@ -1,0 +1,234 @@
+2025/12/27 08:56:25 Data collection started. Press Ctrl+C to stop.
+2025/12/27 08:56:25 [server2] Connected and authenticated
+2025/12/27 08:56:25 [server1] Connected and authenticated
+2025/12/27 08:56:36 Client1 error: [server1] parse error: checksum mismatch: expected 226, got 54
+2025/12/27 08:56:37 [server1] Connected and authenticated
+2025/12/27 08:56:40 Client2 error: [server2] parse error: checksum mismatch: expected 0, got 42
+2025/12/27 08:56:41 [server2] Connected and authenticated
+2025/12/27 08:56:47 Client1 error: [server1] parse error: checksum mismatch: expected 153, got 46
+2025/12/27 08:56:48 [server1] Connected and authenticated
+2025/12/27 08:56:52 Client2 error: [server2] parse error: checksum mismatch: expected 133, got 35
+2025/12/27 08:56:52 [server2] Connected and authenticated
+2025/12/27 08:56:55 Statistics: 111 records, 3.70 records/sec, running for 30s
+2025/12/27 08:56:57 Client1 error: [server1] parse error: checksum mismatch: expected 102, got 233
+2025/12/27 08:56:58 [server1] Connected and authenticated
+2025/12/27 08:57:02 Client2 error: [server2] parse error: checksum mismatch: expected 152, got 3
+2025/12/27 08:57:02 [server2] Connected and authenticated
+2025/12/27 08:57:08 Client1 error: [server1] parse error: checksum mismatch: expected 88, got 218
+2025/12/27 08:57:08 [server1] Connected and authenticated
+2025/12/27 08:57:12 Client2 error: [server2] parse error: checksum mismatch: expected 161, got 251
+2025/12/27 08:57:13 [server2] Connected and authenticated
+2025/12/27 08:57:20 Client1 error: [server1] parse error: checksum mismatch: expected 190, got 216
+2025/12/27 08:57:20 [server1] Connected and authenticated
+2025/12/27 08:57:23 Client2 error: [server2] parse error: checksum mismatch: expected 75, got 40
+2025/12/27 08:57:24 [server2] Connected and authenticated
+2025/12/27 08:57:25 Statistics: 218 records, 3.63 records/sec, running for 1m0s
+2025/12/27 08:57:31 Client1 error: [server1] parse error: checksum mismatch: expected 199, got 233
+2025/12/27 08:57:31 [server1] Connected and authenticated
+2025/12/27 08:57:33 Client2 error: [server2] parse error: checksum mismatch: expected 247, got 254
+2025/12/27 08:57:34 [server2] Connected and authenticated
+2025/12/27 08:57:42 Client1 error: [server1] parse error: checksum mismatch: expected 92, got 28
+2025/12/27 08:57:42 [server1] Connected and authenticated
+2025/12/27 08:57:45 Client2 error: [server2] parse error: checksum mismatch: expected 62, got 38
+2025/12/27 08:57:46 [server2] Connected and authenticated
+2025/12/27 08:57:52 Client1 error: [server1] parse error: checksum mismatch: expected 236, got 172
+2025/12/27 08:57:53 [server1] Connected and authenticated
+2025/12/27 08:57:55 Statistics: 329 records, 3.66 records/sec, running for 1m30s
+2025/12/27 08:57:57 Client2 error: [server2] parse error: checksum mismatch: expected 5, got 38
+2025/12/27 08:57:57 [server2] Connected and authenticated
+2025/12/27 08:58:03 Client1 error: [server1] parse error: checksum mismatch: expected 181, got 74
+2025/12/27 08:58:03 [server1] Connected and authenticated
+2025/12/27 08:58:07 Client2 error: [server2] parse error: checksum mismatch: expected 102, got 12
+2025/12/27 08:58:08 [server2] Connected and authenticated
+2025/12/27 08:58:14 Client1 error: [server1] parse error: checksum mismatch: expected 149, got 3
+2025/12/27 08:58:15 [server1] Connected and authenticated
+2025/12/27 08:58:18 Client2 error: [server2] parse error: checksum mismatch: expected 23, got 43
+2025/12/27 08:58:18 [server2] Connected and authenticated
+2025/12/27 08:58:25 Statistics: 439 records, 3.66 records/sec, running for 2m0s
+2025/12/27 08:58:29 Client1 error: [server1] parse error: checksum mismatch: expected 88, got 14
+2025/12/27 08:58:29 Client2 error: [server2] parse error: checksum mismatch: expected 249, got 2
+2025/12/27 08:58:29 [server1] Connected and authenticated
+2025/12/27 08:58:30 [server2] Connected and authenticated
+2025/12/27 08:58:40 Client2 error: [server2] parse error: checksum mismatch: expected 232, got 37
+2025/12/27 08:58:40 [server2] Connected and authenticated
+2025/12/27 08:58:41 Client1 error: [server1] parse error: checksum mismatch: expected 20, got 60
+2025/12/27 08:58:41 [server1] Connected and authenticated
+2025/12/27 08:58:51 Client2 error: [server2] parse error: checksum mismatch: expected 56, got 3
+2025/12/27 08:58:51 [server2] Connected and authenticated
+2025/12/27 08:58:52 Client1 error: [server1] parse error: checksum mismatch: expected 82, got 222
+2025/12/27 08:58:53 [server1] Connected and authenticated
+2025/12/27 08:58:55 Statistics: 549 records, 3.66 records/sec, running for 2m30s
+2025/12/27 08:59:02 Client2 error: [server2] parse error: checksum mismatch: expected 14, got 19
+2025/12/27 08:59:03 Client1 error: [server1] parse error: checksum mismatch: expected 76, got 67
+2025/12/27 08:59:03 [server1] Connected and authenticated
+2025/12/27 08:59:03 [server2] Connected and authenticated
+2025/12/27 08:59:14 Client2 error: [server2] parse error: checksum mismatch: expected 34, got 47
+2025/12/27 08:59:14 Client1 error: [server1] parse error: checksum mismatch: expected 193, got 241
+2025/12/27 08:59:15 [server2] Connected and authenticated
+2025/12/27 08:59:15 [server1] Connected and authenticated
+2025/12/27 08:59:25 Client2 error: [server2] parse error: checksum mismatch: expected 109, got 9
+2025/12/27 08:59:25 [server2] Connected and authenticated
+2025/12/27 08:59:25 Statistics: 658 records, 3.66 records/sec, running for 3m0s
+2025/12/27 08:59:26 Client1 error: [server1] parse error: checksum mismatch: expected 89, got 17
+2025/12/27 08:59:27 [server1] Connected and authenticated
+2025/12/27 08:59:35 Client2 error: [server2] parse error: checksum mismatch: expected 8, got 22
+2025/12/27 08:59:35 [server2] Connected and authenticated
+2025/12/27 08:59:37 Client1 error: [server1] parse error: checksum mismatch: expected 221, got 59
+2025/12/27 08:59:38 [server1] Connected and authenticated
+2025/12/27 08:59:47 Client2 error: [server2] parse error: checksum mismatch: expected 129, got 255
+2025/12/27 08:59:48 [server2] Connected and authenticated
+2025/12/27 08:59:55 Statistics: 752 records, 3.58 records/sec, running for 3m30s
+2025/12/27 08:59:58 Client2 error: [server2] parse error: checksum mismatch: expected 3, got 47
+2025/12/27 08:59:58 [server2] Connected and authenticated
+2025/12/27 09:00:00 Client1 error: [server1] parse error: checksum mismatch: expected 165, got 63
+2025/12/27 09:00:01 [server1] Connected and authenticated
+2025/12/27 09:00:12 Client2 error: [server2] parse error: checksum mismatch: expected 207, got 254
+2025/12/27 09:00:13 [server2] Connected and authenticated
+2025/12/27 09:00:13 Client1 error: [server1] parse error: checksum mismatch: expected 103, got 38
+2025/12/27 09:00:13 [server1] Connected and authenticated
+2025/12/27 09:00:23 Client2 error: [server2] parse error: checksum mismatch: expected 255, got 26
+2025/12/27 09:00:24 [server2] Connected and authenticated
+2025/12/27 09:00:24 Client1 error: [server1] parse error: checksum mismatch: expected 1, got 236
+2025/12/27 09:00:24 [server1] Connected and authenticated
+2025/12/27 09:00:25 Statistics: 849 records, 3.54 records/sec, running for 4m0s
+2025/12/27 09:00:34 Client2 error: [server2] parse error: checksum mismatch: expected 4, got 44
+2025/12/27 09:00:34 [server2] Connected and authenticated
+2025/12/27 09:00:35 Client1 error: [server1] parse error: checksum mismatch: expected 23, got 2
+2025/12/27 09:00:36 [server1] Connected and authenticated
+2025/12/27 09:00:44 Client2 error: [server2] parse error: checksum mismatch: expected 104, got 20
+2025/12/27 09:00:44 [server2] Connected and authenticated
+2025/12/27 09:00:47 Client1 error: [server1] parse error: checksum mismatch: expected 179, got 49
+2025/12/27 09:00:47 [server1] Connected and authenticated
+2025/12/27 09:00:54 Client2 error: [server2] parse error: checksum mismatch: expected 149, got 248
+2025/12/27 09:00:55 [server2] Connected and authenticated
+2025/12/27 09:00:55 Statistics: 960 records, 3.56 records/sec, running for 4m30s
+2025/12/27 09:00:58 Client1 error: [server1] parse error: checksum mismatch: expected 46, got 55
+2025/12/27 09:00:59 [server1] Connected and authenticated
+2025/12/27 09:01:05 Client2 error: [server2] parse error: checksum mismatch: expected 82, got 38
+2025/12/27 09:01:05 [server2] Connected and authenticated
+2025/12/27 09:01:09 Client1 error: [server1] parse error: checksum mismatch: expected 115, got 61
+2025/12/27 09:01:09 [server1] Connected and authenticated
+2025/12/27 09:01:15 Client2 error: [server2] parse error: checksum mismatch: expected 77, got 18
+2025/12/27 09:01:16 [server2] Connected and authenticated
+2025/12/27 09:01:20 Client1 error: [server1] parse error: checksum mismatch: expected 163, got 232
+2025/12/27 09:01:20 [server1] Connected and authenticated
+2025/12/27 09:01:25 Statistics: 1068 records, 3.56 records/sec, running for 5m0s
+2025/12/27 09:01:30 Client1 error: [server1] parse error: checksum mismatch: expected 180, got 222
+2025/12/27 09:01:31 [server1] Connected and authenticated
+2025/12/27 09:01:36 Client2 error: [server2] parse error: checksum mismatch: expected 101, got 11
+2025/12/27 09:01:36 [server2] Connected and authenticated
+2025/12/27 09:01:42 Client1 error: [server1] parse error: checksum mismatch: expected 16, got 14
+2025/12/27 09:01:42 [server1] Connected and authenticated
+2025/12/27 09:01:52 Client1 error: [server1] parse error: checksum mismatch: expected 50, got 226
+2025/12/27 09:01:53 [server1] Connected and authenticated
+2025/12/27 09:01:55 Statistics: 1159 records, 3.51 records/sec, running for 5m30s
+2025/12/27 09:01:57 Client2 error: [server2] parse error: checksum mismatch: expected 28, got 2
+2025/12/27 09:01:58 [server2] Connected and authenticated
+2025/12/27 09:02:03 Client1 error: [server1] parse error: checksum mismatch: expected 174, got 59
+2025/12/27 09:02:04 [server1] Connected and authenticated
+2025/12/27 09:02:07 Client2 error: [server2] parse error: checksum mismatch: expected 84, got 255
+2025/12/27 09:02:07 [server2] Connected and authenticated
+2025/12/27 09:02:14 Client1 error: [server1] parse error: checksum mismatch: expected 0, got 220
+2025/12/27 09:02:14 [server1] Connected and authenticated
+2025/12/27 09:02:18 Client2 error: [server2] parse error: checksum mismatch: expected 63, got 40
+2025/12/27 09:02:18 [server2] Connected and authenticated
+2025/12/27 09:02:24 Client1 error: [server1] parse error: checksum mismatch: expected 24, got 239
+2025/12/27 09:02:24 [server1] Connected and authenticated
+2025/12/27 09:02:25 Statistics: 1264 records, 3.51 records/sec, running for 6m0s
+2025/12/27 09:02:29 Client2 error: [server2] parse error: checksum mismatch: expected 237, got 3
+2025/12/27 09:02:30 [server2] Connected and authenticated
+2025/12/27 09:02:36 Client1 error: [server1] parse error: checksum mismatch: expected 52, got 58
+2025/12/27 09:02:37 [server1] Connected and authenticated
+2025/12/27 09:02:39 Client2 error: [server2] parse error: checksum mismatch: expected 229, got 228
+2025/12/27 09:02:39 [server2] Connected and authenticated
+2025/12/27 09:02:51 Client1 error: [server1] parse error: checksum mismatch: expected 45, got 49
+2025/12/27 09:02:51 Client2 error: [server2] parse error: checksum mismatch: expected 113, got 254
+2025/12/27 09:02:51 [server2] Connected and authenticated
+2025/12/27 09:02:52 [server1] Connected and authenticated
+2025/12/27 09:02:55 Statistics: 1354 records, 3.47 records/sec, running for 6m30s
+2025/12/27 09:03:02 Client2 error: [server2] parse error: checksum mismatch: expected 237, got 109
+2025/12/27 09:03:02 [server2] Connected and authenticated
+2025/12/27 09:03:02 Client1 error: [server1] parse error: checksum mismatch: expected 81, got 230
+2025/12/27 09:03:02 [server1] Connected and authenticated
+2025/12/27 09:03:12 Client2 error: [server2] parse error: checksum mismatch: expected 4, got 2
+2025/12/27 09:03:12 [server2] Connected and authenticated
+2025/12/27 09:03:13 Client1 error: [server1] parse error: checksum mismatch: expected 138, got 232
+2025/12/27 09:03:13 [server1] Connected and authenticated
+2025/12/27 09:03:24 Client1 error: [server1] parse error: checksum mismatch: expected 30, got 236
+2025/12/27 09:03:24 Client2 error: [server2] parse error: checksum mismatch: expected 134, got 4
+2025/12/27 09:03:24 [server1] Connected and authenticated
+2025/12/27 09:03:24 [server2] Connected and authenticated
+2025/12/27 09:03:25 Statistics: 1464 records, 3.49 records/sec, running for 7m0s
+2025/12/27 09:03:34 Client2 error: [server2] parse error: checksum mismatch: expected 236, got 2
+2025/12/27 09:03:35 [server2] Connected and authenticated
+2025/12/27 09:03:35 Client1 error: [server1] parse error: checksum mismatch: expected 51, got 9
+2025/12/27 09:03:36 [server1] Connected and authenticated
+2025/12/27 09:03:44 Client2 error: [server2] parse error: checksum mismatch: expected 239, got 38
+2025/12/27 09:03:45 [server2] Connected and authenticated
+2025/12/27 09:03:46 Client1 error: [server1] parse error: checksum mismatch: expected 105, got 233
+2025/12/27 09:03:47 [server1] Connected and authenticated
+2025/12/27 09:03:55 Statistics: 1565 records, 3.48 records/sec, running for 7m30s
+2025/12/27 09:03:55 Client2 error: [server2] parse error: checksum mismatch: expected 93, got 40
+2025/12/27 09:03:55 [server2] Connected and authenticated
+2025/12/27 09:04:00 Client1 error: [server1] parse error: checksum mismatch: expected 16, got 237
+2025/12/27 09:04:00 [server1] Connected and authenticated
+2025/12/27 09:04:05 Client2 error: [server2] parse error: checksum mismatch: expected 89, got 39
+2025/12/27 09:04:06 [server2] Connected and authenticated
+2025/12/27 09:04:12 Client1 error: [server1] parse error: checksum mismatch: expected 200, got 72
+2025/12/27 09:04:13 [server1] Connected and authenticated
+2025/12/27 09:04:16 Client2 error: [server2] parse error: checksum mismatch: expected 75, got 34
+2025/12/27 09:04:16 [server2] Connected and authenticated
+2025/12/27 09:04:23 Client1 error: [server1] parse error: checksum mismatch: expected 135, got 68
+2025/12/27 09:04:23 [server1] Connected and authenticated
+2025/12/27 09:04:25 Statistics: 1675 records, 3.49 records/sec, running for 8m0s
+2025/12/27 09:04:27 Client2 error: [server2] parse error: checksum mismatch: expected 178, got 255
+2025/12/27 09:04:27 [server2] Connected and authenticated
+2025/12/27 09:04:34 Client1 error: [server1] parse error: checksum mismatch: expected 112, got 247
+2025/12/27 09:04:35 [server1] Connected and authenticated
+2025/12/27 09:04:41 Client2 error: [server2] parse error: checksum mismatch: expected 186, got 24
+2025/12/27 09:04:42 [server2] Connected and authenticated
+2025/12/27 09:04:45 Client1 error: [server1] parse error: checksum mismatch: expected 8, got 58
+2025/12/27 09:04:45 [server1] Connected and authenticated
+2025/12/27 09:04:53 Client2 error: [server2] parse error: checksum mismatch: expected 65, got 5
+2025/12/27 09:04:53 [server2] Connected and authenticated
+2025/12/27 09:04:55 Statistics: 1782 records, 3.49 records/sec, running for 8m30s
+2025/12/27 09:05:04 Client2 error: [server2] parse error: checksum mismatch: expected 202, got 1
+2025/12/27 09:05:04 [server2] Connected and authenticated
+2025/12/27 09:05:06 Client1 error: [server1] parse error: checksum mismatch: expected 13, got 59
+2025/12/27 09:05:06 [server1] Connected and authenticated
+2025/12/27 09:05:14 Client2 error: [server2] parse error: checksum mismatch: expected 51, got 248
+2025/12/27 09:05:15 [server2] Connected and authenticated
+2025/12/27 09:05:16 Client1 error: [server1] parse error: checksum mismatch: expected 178, got 57
+2025/12/27 09:05:17 [server1] Connected and authenticated
+2025/12/27 09:05:25 Statistics: 1874 records, 3.47 records/sec, running for 9m0s
+2025/12/27 09:05:28 Client1 error: [server1] parse error: checksum mismatch: expected 250, got 122
+2025/12/27 09:05:29 Client2 error: [server2] parse error: checksum mismatch: expected 184, got 35
+2025/12/27 09:05:29 [server2] Connected and authenticated
+2025/12/27 09:05:29 [server1] Connected and authenticated
+2025/12/27 09:05:41 Client2 error: [server2] parse error: checksum mismatch: expected 21, got 1
+2025/12/27 09:05:41 [server2] Connected and authenticated
+2025/12/27 09:05:41 Client1 error: [server1] parse error: checksum mismatch: expected 1, got 66
+2025/12/27 09:05:42 [server1] Connected and authenticated
+2025/12/27 09:05:51 Client2 error: [server2] parse error: checksum mismatch: expected 232, got 13
+2025/12/27 09:05:51 [server2] Connected and authenticated
+2025/12/27 09:05:51 Client1 error: [server1] parse error: checksum mismatch: expected 229, got 57
+2025/12/27 09:05:52 [server1] Connected and authenticated
+2025/12/27 09:05:55 Statistics: 1983 records, 3.48 records/sec, running for 9m30s
+2025/12/27 09:06:02 Client2 error: [server2] parse error: checksum mismatch: expected 81, got 252
+2025/12/27 09:06:02 [server2] Connected and authenticated
+2025/12/27 09:06:03 Client1 error: [server1] parse error: checksum mismatch: expected 140, got 108
+2025/12/27 09:06:04 [server1] Connected and authenticated
+2025/12/27 09:06:12 Client2 error: [server2] parse error: checksum mismatch: expected 29, got 1
+2025/12/27 09:06:12 [server2] Connected and authenticated
+2025/12/27 09:06:13 Client1 error: [server1] parse error: checksum mismatch: expected 224, got 235
+2025/12/27 09:06:14 [server1] Connected and authenticated
+2025/12/27 09:06:25 Client2 error: [server2] parse error: checksum mismatch: expected 21, got 0
+2025/12/27 09:06:25 [server2] Connected and authenticated
+2025/12/27 09:06:25 
+Shutting down...
+2025/12/27 09:06:25 Client1 error: [server1] read error: read tcp 192.168.0.49:60736->95.163.237.76:5123: use of closed network connection
+2025/12/27 09:06:25 Client2 error: [server2] read error: read tcp 192.168.0.49:60774->95.163.237.76:5124: use of closed network connection
+2025/12/27 09:06:25 Statistics: 2073 records, 3.45 records/sec, running for 10m0s
+2025/12/27 09:06:55 Statistics: 2073 records, 3.29 records/sec, running for 10m30s
+2025/12/27 09:07:25 Statistics: 2073 records, 3.14 records/sec, running for 11m0s
+2025/12/27 09:07:55 Statistics: 2073 records, 3.00 records/sec, running for 11m30s

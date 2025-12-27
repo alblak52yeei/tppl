@@ -16,13 +16,13 @@ func TestParseServer1Data(t *testing.T) {
 	data := make([]byte, Server1RecordSize)
 	
 	// Write timestamp (8 bytes, little-endian)
-	binary.LittleEndian.PutUint64(data[0:8], uint64(timestamp))
+	binary.BigEndian.PutUint64(data[0:8], uint64(timestamp))
 	
-	// Write temperature (4 bytes, little-endian, float32)
-	binary.LittleEndian.PutUint32(data[8:12], math.Float32bits(temperature))
+	// Write temperature (4 bytes, big-endian, float32)
+	binary.BigEndian.PutUint32(data[8:12], math.Float32bits(temperature))
 	
-	// Write pressure (2 bytes, little-endian, signed integer)
-	binary.LittleEndian.PutUint16(data[12:14], uint16(pressure))
+	// Write pressure (2 bytes, big-endian, signed integer)
+	binary.BigEndian.PutUint16(data[12:14], uint16(pressure))
 	
 	// Calculate checksum
 	checksum := byte(0)
@@ -75,13 +75,13 @@ func TestParseServer2Data(t *testing.T) {
 	
 	data := make([]byte, Server2RecordSize)
 	
-	// Write timestamp (8 bytes, little-endian)
-	binary.LittleEndian.PutUint64(data[0:8], uint64(timestamp))
+	// Write timestamp (8 bytes, big-endian)
+	binary.BigEndian.PutUint64(data[0:8], uint64(timestamp))
 	
-	// Write X, Y, Z (each 4 bytes, little-endian, signed integers)
-	binary.LittleEndian.PutUint32(data[8:12], uint32(x))
-	binary.LittleEndian.PutUint32(data[12:16], uint32(y))
-	binary.LittleEndian.PutUint32(data[16:20], uint32(z))
+	// Write X, Y, Z (each 4 bytes, big-endian, signed integers)
+	binary.BigEndian.PutUint32(data[8:12], uint32(x))
+	binary.BigEndian.PutUint32(data[12:16], uint32(y))
+	binary.BigEndian.PutUint32(data[16:20], uint32(z))
 	
 	// Calculate checksum
 	checksum := byte(0)

@@ -34,6 +34,11 @@ func mockServer(t *testing.T, port int, recordSize int, sendData func() []byte) 
 					return
 				}
 				
+				// Send "granted" response (as real server does)
+				if _, err := c.Write([]byte("granted")); err != nil {
+					return
+				}
+				
 				// Send data when "get" is received
 				for {
 					buf := make([]byte, 3)
@@ -62,9 +67,9 @@ func TestClient_Connect(t *testing.T) {
 		// Create valid server1 record
 		data := make([]byte, Server1RecordSize)
 		timestamp := time.Now().Unix() * TimestampMultiplier
-		binary.LittleEndian.PutUint64(data[0:8], uint64(timestamp))
-		binary.LittleEndian.PutUint32(data[8:12], math.Float32bits(25.5))
-		binary.LittleEndian.PutUint16(data[12:14], uint16(1013))
+		binary.BigEndian.PutUint64(data[0:8], uint64(timestamp))
+		binary.BigEndian.PutUint32(data[8:12], math.Float32bits(25.5))
+		binary.BigEndian.PutUint16(data[12:14], uint16(1013))
 		
 		checksum := byte(0)
 		for i := 0; i < Server1RecordSize-1; i++ {
@@ -134,9 +139,9 @@ func TestClient_ReceiveData(t *testing.T) {
 	listener := mockServer(t, 0, Server1RecordSize, func() []byte {
 		data := make([]byte, Server1RecordSize)
 		timestamp := time.Now().Unix() * TimestampMultiplier
-		binary.LittleEndian.PutUint64(data[0:8], uint64(timestamp))
-		binary.LittleEndian.PutUint32(data[8:12], math.Float32bits(25.5))
-		binary.LittleEndian.PutUint16(data[12:14], uint16(1013))
+		binary.BigEndian.PutUint64(data[0:8], uint64(timestamp))
+		binary.BigEndian.PutUint32(data[8:12], math.Float32bits(25.5))
+		binary.BigEndian.PutUint16(data[12:14], uint16(1013))
 		
 		checksum := byte(0)
 		for i := 0; i < Server1RecordSize-1; i++ {

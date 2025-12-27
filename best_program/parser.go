@@ -34,34 +34,19 @@ func ParseServer1Data(data []byte) (*DataRecord, error) {
 		return nil, fmt.Errorf("checksum mismatch: expected %d, got %d", checksum, data[Server1RecordSize-1])
 	}
 	
-	// Parse timestamp (8 bytes, little-endian, signed int64)
-	// Read as uint64 first, then convert to int64 to handle sign correctly
-	timestampRaw := binary.LittleEndian.Uint64(data[0:8])
+	// Parse timestamp (8 bytes, big-endian/network byte order, signed int64)
+	timestampRaw := binary.BigEndian.Uint64(data[0:8])
 	timestampMicro := int64(timestampRaw)
 	// Convert microseconds to seconds and nanoseconds
-	// Handle negative values correctly
-	var seconds int64
-	var nanoseconds int64
-	if timestampMicro >= 0 {
-		seconds = timestampMicro / TimestampMultiplier
-		nanoseconds = (timestampMicro % TimestampMultiplier) * 1000
-	} else {
-		// For negative timestamps (shouldn't happen for POSIX, but handle it)
-		seconds = timestampMicro / TimestampMultiplier
-		remainder := timestampMicro % TimestampMultiplier
-		if remainder < 0 {
-			remainder += TimestampMultiplier
-			seconds--
-		}
-		nanoseconds = remainder * 1000
-	}
+	seconds := timestampMicro / TimestampMultiplier
+	nanoseconds := (timestampMicro % TimestampMultiplier) * 1000
 	timestamp := time.Unix(seconds, nanoseconds)
 	
-	// Parse temperature (4 bytes, little-endian, float32)
-	tempFloat := math.Float32frombits(binary.LittleEndian.Uint32(data[8:12]))
+	// Parse temperature (4 bytes, big-endian, float32)
+	tempFloat := math.Float32frombits(binary.BigEndian.Uint32(data[8:12]))
 	
-	// Parse pressure (2 bytes, little-endian, signed integer)
-	pressure := int16(binary.LittleEndian.Uint16(data[12:14]))
+	// Parse pressure (2 bytes, big-endian, signed integer)
+	pressure := int16(binary.BigEndian.Uint16(data[12:14]))
 	
 	return &DataRecord{
 		Timestamp:   timestamp,
@@ -86,34 +71,18 @@ func ParseServer2Data(data []byte) (*DataRecord, error) {
 		return nil, fmt.Errorf("checksum mismatch: expected %d, got %d", checksum, data[Server2RecordSize-1])
 	}
 	
-	// Parse timestamp (8 bytes, little-endian, signed int64)
-	// Read as uint64 first, then convert to int64 to handle sign correctly
-	timestampRaw := binary.LittleEndian.Uint64(data[0:8])
+	// Parse timestamp (8 bytes, big-endian/network byte order, signed int64)
+	timestampRaw := binary.BigEndian.Uint64(data[0:8])
 	timestampMicro := int64(timestampRaw)
 	// Convert microseconds to seconds and nanoseconds
-	// Handle negative values correctly
-	var seconds int64
-	var nanoseconds int64
-	if timestampMicro >= 0 {
-		seconds = timestampMicro / TimestampMultiplier
-		nanoseconds = (timestampMicro % TimestampMultiplier) * 1000
-	} else {
-		// For negative timestamps (shouldn't happen for POSIX, but handle it)
-		seconds = timestampMicro / TimestampMultiplier
-		remainder := timestampMicro % TimestampMultiplier
-		if remainder < 0 {
-			remainder += TimestampMultiplier
-			seconds--
-		}
-		nanoseconds = remainder * 1000
-	}
+	seconds := timestampMicro / TimestampMultiplier
+	nanoseconds := (timestampMicro % TimestampMultiplier) * 1000
 	timestamp := time.Unix(seconds, nanoseconds)
 	
-	// Parse X, Y, Z (each 4 bytes, little-endian, signed integers)
-	// Read as uint32 first, then convert to int32 to handle sign correctly
-	xRaw := binary.LittleEndian.Uint32(data[8:12])
-	yRaw := binary.LittleEndian.Uint32(data[12:16])
-	zRaw := binary.LittleEndian.Uint32(data[16:20])
+	// Parse X, Y, Z (each 4 bytes, big-endian, signed integers)
+	xRaw := binary.BigEndian.Uint32(data[8:12])
+	yRaw := binary.BigEndian.Uint32(data[12:16])
+	zRaw := binary.BigEndian.Uint32(data[16:20])
 	x := int32(xRaw)
 	y := int32(yRaw)
 	z := int32(zRaw)
